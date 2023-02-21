@@ -3,6 +3,10 @@
 
 char** innitBoard();
 void printBoard(char **board);
+char rowColumnToBlock(char row, char column);
+char searchRow(char **board, char, char);
+char searchColumn(char **board, char, char);
+char searchBlock(char **board, char, char, char);
 
 int main() {
     char **board = innitBoard();
@@ -51,4 +55,35 @@ void printBoard(char **board) {
         }
         printf("\n");
     }
+}
+
+char searchRow(char **board, char row, char number) {
+    for (int column = 0; column < 9; column++) {
+        if (board[row][column] == number) return 1;
+    }
+    return 0;
+}
+
+char searchColumn(char **board, char column, char number) {
+    for (int row = 0; row < 9; row++) {
+        if (board[row][column] == number) return 1;
+    }
+    return 0;
+}
+
+char rowColumnToBlock(char row, char column) {
+    return ((row / 3) * 3 + column / 3);
+}
+
+char searchBlock(char **board, char row, char column, char number) {
+    char block = rowColumnToBlock(row, column);
+    printf("\n%d", block);
+    char rowStart = (block / 3) * 3, columnStart = (block % 3) * 3;
+    printf("\n%d;%d", rowStart, columnStart);
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (board[rowStart + i][columnStart + j] == number) return 1;
+        }
+    }
+    return 0;
 }
